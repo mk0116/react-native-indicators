@@ -64,9 +64,12 @@ export default class Indicator extends PureComponent {
       });
 
     if (hasLoopSupport) {
-      Animated
-        .loop(animation)
-        .start();
+      animation
+        .start(() => {
+          if (this.mounted)
+            progress.setValue(0);
+            this.startAnimation();
+        });
     } else {
       progress.setValue(0);
       animation.start(this.startAnimation);
